@@ -150,6 +150,7 @@ int parseInfoFile(
     ssize_t read;
     
     FILE *pFile = fopen(strAssociation_Path.c_str(), "r");
+//	FILE *pFile = fopen("/home/mesa/mighty/png_to_klg/testfiles/lv_01", "r");
     if(!pFile) {
         return -1;
     }
@@ -285,11 +286,14 @@ int main(int argc, char* argv[])
     printf("\nCurrent working directory:\n\t%s\n", getcwd(NULL, 0));
 
 
-    strAssociation_Path = strWorkingDir;
-    if(strWorkingDir[strWorkingDir.length() - 1] != '/')
-    {
-        strAssociation_Path += '/';
-    }
+    //strAssociation_Path = strWorkingDir;
+	strAssociation_Path = getcwd(NULL, 0);
+
+	if(strAssociation_Path[strAssociation_Path.length() - 1] != '/')
+	{
+		strAssociation_Path+='/';
+	}
+
     strAssociation_Path += "associations.txt";
     
     /// Parse files
