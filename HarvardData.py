@@ -11,24 +11,22 @@ from os.path import isfile, join
 import Image
 import re
 
-def sorted_nicely( l ): 
+def sorted_nicely( l ):   #code from https://stackoverflow.com/questions/2669059/how-to-sort-alpha-numeric-set-in-python
     """ Sort the given iterable in the way that humans expect.""" 
     convert = lambda text: int(text) if text.isdigit() else text 
     alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ] 
     return sorted(l, key = alphanum_key)
 
+print("Example: /home/mesa/mighty/png_to_klg/Datasets/mit_76_studyroom/76-1studyroom2/")
+path = input("Please enter file path: ")
 
-s = set(['booklet', '4 sheets', '48 sheets', '12 sheets'])
-for x in sorted_nicely(s):
-    print(x)
-
-
-mypath = "/home/mesa/data/sun3d/harvard_c11/hv_c11_2/depth"
+mypath = path + "/depth"
+#"/home/mesa/mighty/png_to_klg/Datasets/mit_76_studyroom/76-1studyroom2/depth"
 
 depthfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 #print (onlyfiles)
 
-f = open("/home/mesa/data/sun3d/harvard_c11/hv_c11_2/depth.txt", 'w')
+f = open(path + "/depth.txt", 'w')
 num = ''
 depthList = []
 
@@ -42,12 +40,13 @@ for i in range (0, len(depthList)):
     f.write("." + str(i) + " ./depth/" + depthList[i] + '\n')
 f.close()
 
-mypath = "/home/mesa/data/sun3d/harvard_c11/hv_c11_2/image"
+mypath = path + "image"
 rgbfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 rgbList = []
 for x in sorted_nicely(rgbfiles):
     rgbList.append(x)
 
+os.makedirs(path + "rgb/")      #credit: https://stackoverflow.com/questions/273192/how-can-i-create-a-directory-if-it-does-not-exist
 for i in range(0, len(rgbList)):
      im = Image.open(mypath + '/' + rgbList[i])
      s = list(rgbList[i])
@@ -55,12 +54,14 @@ for i in range(0, len(rgbList)):
      s[len(rgbList[i]) - 2] = 'n'
      s[len(rgbList[i]) - 1] = 'g'
      rgbfiles[i] = "".join(s)
-     im.save("/home/mesa/data/sun3d/harvard_c11/hv_c11_2/rgb/" + rgbList[i])
+     #print(s)
+     
+     print(str(i + 1))
+     im.save(path + "/rgb/" + rgbfiles[i])
      im.close()
 
-
-f = open("/home/mesa/data/sun3d/harvard_c11/hv_c11_2/rgb.txt", 'w')
+f = open(path + "/rgb.txt", 'w')
 for i in range (0, len(rgbList)):
-    f.write("." + str(i) + " ./rgb/" + rgbList[i] + '\n')
+    f.write("." + str(i) + " ./rgb/" + rgbfiles[i] + '\n')
 f.close()
 
