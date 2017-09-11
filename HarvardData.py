@@ -24,7 +24,6 @@ mypath = path + "/depth"
 #"/home/mesa/mighty/png_to_klg/Datasets/mit_76_studyroom/76-1studyroom2/depth"
 
 depthfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
-#print (onlyfiles)
 
 f = open(path + "/depth.txt", 'w')
 num = ''
@@ -37,7 +36,7 @@ for x in sorted_nicely(depthfiles):
 
 
 for i in range (0, len(depthList)):
-    f.write("." + str(i) + " ./depth/" + depthList[i] + '\n')
+    f.write(str(i) + " ./depth/" + depthList[i] + '\n')
 f.close()
 
 mypath = path + "image"
@@ -62,6 +61,6 @@ for i in range(0, len(rgbList)):
 
 f = open(path + "/rgb.txt", 'w')
 for i in range (0, len(rgbList)):
-    f.write("." + str(i) + " ./rgb/" + rgbfiles[i] + '\n')
+    f.write(str(i) + " ./rgb/" + rgbfiles[i] + '\n')
 f.close()
 
